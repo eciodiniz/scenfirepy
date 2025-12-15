@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scenfirepy"
+version = "0.1.0"
+description = "Python implementation of the SCENFIRE fire-scenario selection framework"
+readme = "README.md"
+requires-python = "==3.10.*"
+license = { text = "CC BY-NC-SA 4.0" }
+authors = [{ name = "Your Name" }]
+
+dependencies = [
+    "numpy==1.24.4",
+    "pandas==2.0.3",
+    "scipy==1.10.1",
+    "powerlaw==1.5",
+    "geopandas==0.13.2",
+    "shapely==2.0.1",
+    "pyproj==3.6.1",
+    "rasterio==1.3.9",
+    "rioxarray==0.15.0",
+    "xarray==2023.6.0",
+    "matplotlib==3.7.3"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
