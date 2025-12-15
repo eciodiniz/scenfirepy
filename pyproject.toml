@@ -7,7 +7,7 @@ name = "scenfirepy"
 version = "0.1.0"
 description = "Python implementation of the SCENFIRE fire-scenario selection framework"
 readme = "README.md"
-requires-python = "==3.10.*"
+requires-python = ">=3.9"
 license = { text = "CC BY-NC-SA 4.0" }
 authors = [{ name = "Your Name" }]
 
