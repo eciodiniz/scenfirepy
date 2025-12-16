@@ -44,3 +44,26 @@ def build_target_hist(
         "target_hist": target_hist,
         "bins": bins
     }
+
+
+def calculate_discrepancy(target_hist, simulated_hist):
+    """
+    Literal port of SCENFIRE R::calculate_discrepancy()
+    """
+
+    target_hist = np.asarray(target_hist, dtype=float)
+    simulated_hist = np.asarray(simulated_hist, dtype=float)
+
+    if target_hist.shape != simulated_hist.shape:
+        raise ValueError("target_hist and simulated_hist must have same length")
+
+    mask = target_hist > 0
+
+    if not np.any(mask):
+        raise ValueError("target_hist contains no positive values")
+
+    discrepancy = np.sum(
+        np.abs(simulated_hist[mask] - target_hist[mask]) / target_hist[mask]
+    )
+
+    return discrepancy
