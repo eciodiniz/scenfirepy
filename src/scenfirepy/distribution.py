@@ -1,44 +1,24 @@
 import numpy as np
-import pandas as pd
-import powerlaw
 
-
-def fit_powerlaw_distribution(sizes, xmin=None):
+def build_target_hist(x, breaks):
     """
-    Fit a truncated power-law distribution to fire sizes.
+    Literal port of R build_target_hist():
+    hist(x, breaks=breaks, plot=FALSE, density=TRUE)
     """
-    sizes = np.asarray(sizes)
-    sizes = sizes[sizes > 0]
 
-    if sizes.size == 0:
-        raise ValueError("No positive fire sizes provided")
+    x = np.asarray(x, dtype=float)
+    x = x[np.isfinite(x)]
+    x = x[x > 0]
 
-    fit = powerlaw.Fit(sizes, xmin=xmin, verbose=False)
+    if x.size == 0:
+        raise ValueError("Input vector 'x' must contain positive values")
+
+    density, breaks = np.histogram(x, bins=breaks, density=True)
+
+    mids = (breaks[:-1] + breaks[1:]) / 2.0
 
     return {
-        "alpha": fit.alpha,
-        "xmin": fit.xmin,
-        "sigma": fit.sigma,
-        "fit": fit
+        "density": density,
+        "breaks": breaks,
+        "mids": mids
     }
-
-
-def build_target_histogram(sizes, bins):
-    """
-    Build target fire-size histogram.
-    """
-    sizes = np.asarray(sizes)
-
-    if sizes.size == 0:
-        raise ValueError("No fire sizes provided")
-
-    if not isinstance(bins, (int, list, tuple, np.ndarray)):
-        raise TypeError("bins must be an integer or a sequence of bin edges")
-
-    hist, bin_edges = np.histogram(sizes, bins=bins)
-
-    return pd.DataFrame({
-        "bin_min": bin_edges[:-1],
-        "bin_max": bin_edges[1:],
-        "count": hist
-    })
