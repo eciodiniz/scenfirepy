@@ -8,7 +8,7 @@ def build_target_hist(
     logaritmic=True
 ):
     """
-    Literal port of SCENFIRE R::build_target_hist()
+    Literal port of SCENFIRE R::build_target_hist
     """
 
     sizes = np.asarray(sizes, dtype=float)
@@ -48,19 +48,19 @@ def build_target_hist(
 
 def calculate_discrepancy(target_hist, simulated_hist):
     """
-    Literal port of SCENFIRE R::calculate_discrepancy()
+    Literal port of SCENFIRE R::calculate_discrepancy
     """
 
     target_hist = np.asarray(target_hist, dtype=float)
     simulated_hist = np.asarray(simulated_hist, dtype=float)
 
     if target_hist.shape != simulated_hist.shape:
-        raise ValueError("target_hist and simulated_hist must have same length")
+        raise ValueError("Histograms must have the same length")
 
     mask = target_hist > 0
 
     if not np.any(mask):
-        raise ValueError("target_hist contains no positive values")
+        raise ValueError("Target histogram has no positive bins")
 
     discrepancy = np.sum(
         np.abs(simulated_hist[mask] - target_hist[mask]) / target_hist[mask]
