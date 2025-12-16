@@ -8,14 +8,18 @@ def build_target_hist(
     logaritmic=True
 ):
     """
-    Literal port of SCENFIRE R::build_target_hist
+    Literal port of SCENFIRE R::build_target_hist()
     """
 
     sizes = np.asarray(sizes, dtype=float)
     event_surfaces = np.asarray(event_surfaces, dtype=float)
 
+    # Match R behavior: remove non-positive values before log
+    sizes = sizes[sizes > 0]
+    event_surfaces = event_surfaces[event_surfaces > 0]
+
     if sizes.size == 0 or event_surfaces.size == 0:
-        raise ValueError("sizes and event_surfaces must not be empty")
+        raise ValueError("sizes and event_surfaces must contain positive values")
 
     eps = 1e-6
 
@@ -48,19 +52,19 @@ def build_target_hist(
 
 def calculate_discrepancy(target_hist, simulated_hist):
     """
-    Literal port of SCENFIRE R::calculate_discrepancy
+    Literal port of SCENFIRE R::calculate_discrepancy()
     """
 
     target_hist = np.asarray(target_hist, dtype=float)
     simulated_hist = np.asarray(simulated_hist, dtype=float)
 
     if target_hist.shape != simulated_hist.shape:
-        raise ValueError("Histograms must have the same length")
+        raise ValueError("target_hist and simulated_hist must have same length")
 
     mask = target_hist > 0
 
     if not np.any(mask):
-        raise ValueError("Target histogram has no positive bins")
+        raise ValueError("target_hist contains no positive values")
 
     discrepancy = np.sum(
         np.abs(simulated_hist[mask] - target_hist[mask]) / target_hist[mask]
