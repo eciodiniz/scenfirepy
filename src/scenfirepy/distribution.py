@@ -1,24 +1,46 @@
 import numpy as np
 
-def build_target_hist(x, breaks):
+
+def build_target_hist(
+    sizes,
+    event_surfaces,
+    num_bins=20,
+    logaritmic=True
+):
     """
-    Literal port of R build_target_hist():
-    hist(x, breaks=breaks, plot=FALSE, density=TRUE)
+    Literal port of SCENFIRE R::build_target_hist()
     """
 
-    x = np.asarray(x, dtype=float)
-    x = x[np.isfinite(x)]
-    x = x[x > 0]
+    sizes = np.asarray(sizes, dtype=float)
+    event_surfaces = np.asarray(event_surfaces, dtype=float)
 
-    if x.size == 0:
-        raise ValueError("Input vector 'x' must contain positive values")
+    if sizes.size == 0 or event_surfaces.size == 0:
+        raise ValueError("sizes and event_surfaces must not be empty")
 
-    density, breaks = np.histogram(x, bins=breaks, density=True)
+    eps = 1e-6
 
-    mids = (breaks[:-1] + breaks[1:]) / 2.0
+    if logaritmic:
+        sizes_tr = np.log(sizes + eps)
+        events_tr = np.log(event_surfaces + eps)
+    else:
+        sizes_tr = sizes
+        events_tr = event_surfaces
+
+    all_vals = np.concatenate([sizes_tr, events_tr])
+
+    bins = np.linspace(
+        np.min(all_vals),
+        np.max(all_vals),
+        num_bins + 1
+    )
+
+    target_hist, _ = np.histogram(
+        sizes_tr,
+        bins=bins,
+        density=True
+    )
 
     return {
-        "density": density,
-        "breaks": breaks,
-        "mids": mids
+        "target_hist": target_hist,
+        "bins": bins
     }
