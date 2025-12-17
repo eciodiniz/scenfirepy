@@ -15,7 +15,7 @@ This Python library mirrors the logic of the SCENFIRE R package: https://github.
 
 - [Example 1 — Fire hazard–based scenario selection](examples/example_01_fire_hazard.md)
 
-
+- [Example 2 — Fire severity–based scenario selection](examples/example_02_fire_severity.md)
 
 
 ## Status
