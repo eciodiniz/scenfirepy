@@ -9,6 +9,15 @@ This Python library mirrors the logic of the SCENFIRE R package: https://github.
 - select simulated events to match historical regimes
 - support burn probability and scenario analysis
 
+
+---
+
+```markdown
+## Examples of the scenfirepy application:
+
+- [Example 1 — Fire hazard–based scenario selection](scenfirepy/example/example_01_fire_hazard.md)
+
+
 ## Status
 Under active development.
 
