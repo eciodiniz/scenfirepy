@@ -68,7 +68,8 @@ result = scenfirepy.create_distribution(
 # ------------------------------------------------------
 # 4. USER-FACING OUTPUT
 # ------------------------------------------------------
-# The output includes the selected event magnitudes and a discrepancy metric quantifying the match to the target distribution.
+# The output includes the selected event magnitudes and a discrepancy metric quantifying the
+# match to the target distribution.
 
 df = pd.DataFrame({
     "selected_event_size": result["events"]
