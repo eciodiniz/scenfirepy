@@ -4,7 +4,9 @@ scenfirepy
 Python implementation of the SCENFIRE fire-scenario framework.
 """
 
-__version__ = "0.1.0"
+from importlib.metadata import version
+
+__version__ = version("scenfirepy")
 
 from .preprocess import check_fire_data
 from .distribution import build_target_hist, calculate_discrepancy
