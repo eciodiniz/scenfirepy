@@ -1,31 +1,31 @@
-import pandas as pd
+import numpy as np
 
 
-def validate_fire_dataframe(df):
+def check_fire_data(x):
     """
-    Validate basic structure of a fire-event DataFrame.
+    Literal implementation of SCENFIRE R::check_fire_data (from Rd).
+
+    Validates fire size data:
+    - numeric
+    - finite
+    - positive
+    - non-empty
+
+    Returns cleaned numeric array.
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError("Input must be a pandas DataFrame")
 
-    if df.empty:
-        raise ValueError("DataFrame is empty")
+    if x is None:
+        raise ValueError("Input fire data is None")
 
-    return df
+    x = np.asarray(x, dtype=float)
 
+    if x.size == 0:
+        raise ValueError("Input fire data is empty")
 
-def compute_fire_size(df, area_column):
-    """
-    Ensure a fire-size column exists and is numeric.
-    """
-    if area_column not in df.columns:
-        raise KeyError(f"Missing required column: {area_column}")
+    if not np.all(np.isfinite(x)):
+        raise ValueError("Input fire data contains non-finite values")
 
-    df = df.copy()
+    if not np.all(x > 0):
+        raise ValueError("Input fire data must contain only positive values")
 
-    df[area_column] = pd.to_numeric(df[area_column], errors="coerce")
-
-    if df[area_column].isna().all():
-        raise ValueError("Fire size column contains no valid numeric values")
-
-    return df
+    return x
