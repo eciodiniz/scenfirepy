@@ -11,11 +11,10 @@ This Python library mirrors the logic of the SCENFIRE R package: https://github.
 
 
 ---
+## Examples
 
-```markdown
-## Examples of the scenfirepy application:
+- [Example 1 — Fire hazard–based scenario selection](./scenfirepy/example/example_01_fire_hazard.md)
 
-- [Example 1 — Fire hazard–based scenario selection](scenfirepy/example/example_01_fire_hazard.md)
 
 
 ## Status
