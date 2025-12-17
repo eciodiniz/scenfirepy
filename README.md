@@ -1,6 +1,6 @@
 # scenfirepy
 
-`scenfirepy` is a Python implementation for building fire-size scenarios by selecting simulated fire events that reproduce a target historical fire hazard, fire-size distribution, and fire severity.
+`scenfirepy` is a Python implementation for building fire-size scenarios by selecting simulated fire events that reproduce a target historical fire hazard or severity, and fire-size distribution.
 
 This Python library mirrors the logic of the SCENFIRE R package: https://github.com/rmmarcos/SCENFIRE_package, thus allowing the user, for instance, to:
 - preprocess FLP20 / fire simulation outputs
