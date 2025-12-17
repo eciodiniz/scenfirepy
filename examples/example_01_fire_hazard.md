@@ -1,12 +1,9 @@
 # EXAMPLE 1 — Fire hazard–based scenario selection
 
-This example demonstrates how **scenfirepy** can be used to select  
-a subset of candidate fire events whose size distribution reproduces a  
-historical fire regime derived from **raster-based fire hazard data**.
+This example demonstrates how **scenfirepy** can be used to select a subset of candidate fire events whose size distribution reproduces a  
+historical fire regime derived from **raster-based fire hazard data**. 
 
-The fire hazard raster used here is distributed with the R package  
-**fireexposuR** and is openly available at:  
-https://github.com/ropensci/fireexposuR
+The fire hazard raster used here is distributed with the R package **fireexposuR** and is openly available at: https://github.com/ropensci/fireexposuR
 
 
 ---
