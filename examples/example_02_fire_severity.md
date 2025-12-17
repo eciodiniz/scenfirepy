@@ -5,6 +5,9 @@ wildfire event. The raster is then used to apply **scenfirepy** and select event
 
 The raster used in the example below comes from the historical burned area and fire severity in Chile database by Miranda et al. (2022: https://doi.org/10.1594/PANGAEA.941127) and is related to their article from the same year (https://doi.org/10.5194/essd-14-3599-2022).
 
+You can obtain and test the raster used as an example below from the original repository cited above, or download it here:
+https://raw.githubusercontent.com/eciodiniz/scenfirepy/main/examples/Severity_CL-VS_ID190189_u460_20180313.tif
+
 ```python
 import scenfirepy
 import numpy as np
