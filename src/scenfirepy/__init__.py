@@ -2,14 +2,32 @@
 scenfirepy
 
 Python implementation of the SCENFIRE fire-scenario framework.
+(R-parity port)
 """
 
 __version__ = "0.1.0"
 
-from .io import read_flp20_csv
-from .preprocess import validate_fire_dataframe, compute_fire_size
-from .distribution import fit_powerlaw_distribution, build_target_histogram
-from .selection import calculate_discrepancy, select_events
-from .spatial import validate_geodataframe
-from .raster import rasterize_geometries
-from .viz import plot_fire_size_distribution
+# Core validation / preprocessing
+from .preprocess import check_fire_data
+
+# Parameter handling
+from .params import get_select_params
+
+# Distribution & discrepancy
+from .distribution import (
+    build_target_hist,
+    calculate_discrepancy,
+    fit_powerlaw,
+)
+
+# Event selection & orchestration
+from .selection import select_events
+from .create_distribution import create_distribution
+
+# Burn probability
+from .burn_probability import calc_burn_probability
+
+# FLP20 converters
+from .flp20_to_df import flp20_to_df
+from .flp20_to_bp_df import flp20_to_bp_df
+from .flp20_to_raster import flp20_to_raster
