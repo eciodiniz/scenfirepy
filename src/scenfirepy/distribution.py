@@ -14,7 +14,6 @@ def build_target_hist(
     sizes = np.asarray(sizes, dtype=float)
     event_surfaces = np.asarray(event_surfaces, dtype=float)
 
-    # Match R behavior: remove non-positive values before log
     sizes = sizes[sizes > 0]
     event_surfaces = event_surfaces[event_surfaces > 0]
 
@@ -66,8 +65,30 @@ def calculate_discrepancy(target_hist, simulated_hist):
     if not np.any(mask):
         raise ValueError("target_hist contains no positive values")
 
-    discrepancy = np.sum(
+    return np.sum(
         np.abs(simulated_hist[mask] - target_hist[mask]) / target_hist[mask]
     )
 
-    return discrepancy
+
+def fit_powerlaw(
+    xmin,
+    alpha,
+    n,
+    seed=None
+):
+    """
+    SCENFIRE fit_powerlaw (from Rd specification).
+
+    Generates n samples from a continuous power-law distribution:
+    P(X >= x) ∝ x^(1 - alpha), for x >= xmin
+    """
+
+    if xmin <= 0 or alpha <= 1 or n <= 0:
+        raise ValueError("xmin > 0, alpha > 1, and n > 0 are required")
+
+    rng = np.random.default_rng(seed)
+
+    u = rng.random(n)
+    samples = xmin * (1.0 - u) ** (-1.0 / (alpha - 1.0))
+
+    return samples
