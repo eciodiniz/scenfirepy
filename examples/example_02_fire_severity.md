@@ -12,8 +12,8 @@ import rasterio
 # ------------------------------------------------------
 # 1. LOAD FIRE SEVERITY RASTER 
 # ------------------------------------------------------
-# The severity raster represents spatial variation in burn severity resulting from an observed wildfire. Pixel values are treated as empirical
-# fire-event magnitudes.
+# The severity raster represents spatial variation in burn severity resulting from an observed wildfire.
+# Pixel values are treated as empirical fire-event magnitudes.
 
 raster_path = r"D:\AXA-Chile\Simulations\SCENFIRE-main\Severity_CL-VS_ID190189_u460_20180313.tif"
 
@@ -41,7 +41,8 @@ event_surfaces = np.ones_like(sizes)
 # ------------------------------------------------------
 # 3. CREATE DISTRIBUTION (SCENFIRE CORE ALGORITHM)
 # ------------------------------------------------------
-# A subset of events is selected so that their size distribution best matches a target power-law distribution inferred from the data.
+# A subset of events is selected so that their size distribution best matches a target
+# power-law distribution inferred from the data.
 
 result = scenfirepy.create_distribution(
     sizes=sizes,
