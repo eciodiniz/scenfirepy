@@ -1,10 +1,7 @@
 # Example 2 — Fire severity–based scenario selection
 
-This example uses a raster of fire severity derived from satellite imagery,
-where each pixel quantifies how strongly vegetation was affected by a real
-wildfire event. The raster is then used to apply **scenfirepy** and select
-event magnitudes whose distribution reproduces the observed
-severity-based fire regime.
+This example uses a raster of fire severity derived from satellite imagery, where each pixel quantifies how strongly vegetation was affected by a real
+wildfire event. The raster is then used to apply **scenfirepy** and select event magnitudes whose distribution reproduces the observed severity-based fire regime.
 
 ```python
 import scenfirepy
@@ -13,11 +10,10 @@ import pandas as pd
 import rasterio
 
 # ------------------------------------------------------
-# 1. LOAD FIRE SEVERITY RASTER (LOCAL GeoTIFF)
+# 1. LOAD FIRE SEVERITY RASTER 
 # ------------------------------------------------------
-# The severity raster represents spatial variation in burn severity
-# resulting from an observed wildfire. Pixel values are treated as
-# empirical fire-event magnitudes.
+# The severity raster represents spatial variation in burn severity resulting from an observed wildfire. Pixel values are treated as empirical
+# fire-event magnitudes.
 
 raster_path = r"D:\AXA-Chile\Simulations\SCENFIRE-main\Severity_CL-VS_ID190189_u460_20180313.tif"
 
@@ -45,8 +41,7 @@ event_surfaces = np.ones_like(sizes)
 # ------------------------------------------------------
 # 3. CREATE DISTRIBUTION (SCENFIRE CORE ALGORITHM)
 # ------------------------------------------------------
-# A subset of events is selected so that their size distribution
-# best matches a target power-law distribution inferred from the data.
+# A subset of events is selected so that their size distribution best matches a target power-law distribution inferred from the data.
 
 result = scenfirepy.create_distribution(
     sizes=sizes,
@@ -72,8 +67,7 @@ result = scenfirepy.create_distribution(
 # ------------------------------------------------------
 # 4. USER-FACING OUTPUT
 # ------------------------------------------------------
-# The output includes the selected event magnitudes and a discrepancy
-# metric quantifying the match to the target distribution.
+# The output includes the selected event magnitudes and a discrepancy metric quantifying the match to the target distribution.
 
 df = pd.DataFrame({
     "selected_event_size": result["events"]
