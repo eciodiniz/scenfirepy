@@ -5,11 +5,10 @@
 The package mirrors the core logic of the SCENFIRE R package (https://github.com/rmmarcos/SCENFIRE_package), enabling Python-based workflows that link fire simulation outputs to empirically derived fire-size distributions. This makes scenfirepy suitable for fire-risk analysis, scenario generation, and burn-probability studies where simulated events must be consistent with observed fire regimes.
 
 Thus, scenfirepy allows the user, for instance, to:
-- preprocess FLP20 / fire simulation outputs
+- process FLP20 (Fire Landscape Probability outputs) from the FConstMTT / Minimum Travel Time (MTT) fire spread model
 - build target fire-size distributions
-- select simulated events to match historical regimes
-- support burn probability and scenario analysis
-
+- select simulated events to match historical fire regimes
+- support burn-probability and scenario analysis
 
 ---
 ## Examples of scenfirepy application
