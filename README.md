@@ -18,7 +18,7 @@ VS Code, or JupyterLab.
 ```bash
 conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
 pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
-```bash
+
 
 ---
 ## Examples of scenfirepy application
