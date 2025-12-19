@@ -9,6 +9,26 @@ burned area, or fire severity, depending on data availability.
 
 <div style="clear: both;"></div>
 
+
+<img src="scenfirepy_logo.png" alt="scenfirepy logo" width="140" align="left" style="margin-right:16px;"/>
+
+<h1>scenfirepy</h1>
+
+<p>
+<code>scenfirepy</code> is a Python library for building fire-size scenarios by selecting subsets
+of simulated fire events whose size distributions reproduce observed historical fire regimes.
+Historical regimes can be characterized using raster-based fire information such as fire hazard,
+burned area, or fire severity, depending on data availability.
+</p>
+
+<div style="clear: both;"></div>
+
+
+
+
+
+
+
 `scenfirepy` is a Python library for building fire-size scenarios by selecting subsets of simulated fire events whose size distributions reproduce observed historical fire regimes.
 Historical regimes can be characterized using raster-based fire
 information such as fire hazard, burned area, or fire severity, depending on
