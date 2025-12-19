@@ -26,7 +26,7 @@ Thus, `scenfirepy` allows the user, for instance, to:
 
 ## Installation
 
-**scenfirepy** can be installed using Anaconda and used from the Anaconda Prompt,
+`scenfirepy` can be installed using Anaconda and used from the Anaconda Prompt,
 VS Code, or JupyterLab.
 
 Run the following commands in an Anaconda Prompt:
