@@ -15,7 +15,6 @@ Thus, scenfirepy allows the user, for instance, to:
 scenfirepy can be installed using **Anaconda** and used from the Anaconda Prompt,
 VS Code, or JupyterLab.
 
-```bash
 conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
 pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
 
