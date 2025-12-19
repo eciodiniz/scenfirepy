@@ -20,7 +20,7 @@ import rasterio
 # The severity raster represents spatial variation in burn severity resulting from an observed wildfire.
 # Pixel values are treated as empirical fire-event magnitudes.
 
-raster_path = r"D:\AXA-Chile\Simulations\SCENFIRE-main\Severity_CL-VS_ID190189_u460_20180313.tif"
+raster_path = r"C:\Users\e.diniz\Downloads\scenfirepy\Severity_CL-VS_ID190189_u460_20180313.tif"
 
 with rasterio.open(raster_path) as src:
     severity = src.read(1).astype(float)
