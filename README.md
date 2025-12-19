@@ -10,6 +10,16 @@ Thus, scenfirepy allows the user, for instance, to:
 - select simulated events to match historical fire regimes
 - support burn-probability and scenario analysis
 
+## Installation
+
+scenfirepy can be installed using **Anaconda** and used from the Anaconda Prompt,
+VS Code, or JupyterLab.
+
+```bash
+conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
+pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
+```bash
+
 ---
 ## Examples of scenfirepy application
 
