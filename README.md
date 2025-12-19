@@ -12,23 +12,9 @@ Thus, scenfirepy allows the user, for instance, to:
 
 ## Installation
 
-scenfirepy can be installed using **Anaconda** and used from the Anaconda Prompt,
-VS Code, or JupyterLab.
+scenfirepy can be installed using **Anaconda** and used from the Anaconda Prompt, VS Code, or JupyterLab.
 
+```bash
+# (run in Anaconda Prompt)
 conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
 pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
-
-
----
-## Examples of scenfirepy application
-
-- [Example 1 — Fire hazard–based scenario selection](examples/example_01_fire_hazard.md)
-
-- [Example 2 — Fire severity–based scenario selection](examples/example_02_fire_severity.md)
-
-
-## Status
-Under active development.
-
-## License
-CC BY-NC-SA 4.0
