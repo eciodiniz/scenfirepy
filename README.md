@@ -7,6 +7,7 @@ Historical regimes can be characterized using raster-based fire information such
 burned area, or fire severity, depending on data availability. 
 
 The package mirrors the core logic of the SCENFIRE R package:
+
 https://github.com/rmmarcos/SCENFIRE_package
 </p>
 
