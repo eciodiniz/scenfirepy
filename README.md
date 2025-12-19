@@ -1,7 +1,6 @@
-<div style="display:flex; align-items:center;">
-  <img src="scenfirepy_logo.png" alt="scenfirepy logo" width="140" style="margin-right:16px;">
-  <h1 style="margin:0;">scenfirepy</h1>
-</div>
+<img src="scenfirepy_logo.png" alt="scenfirepy logo" width="140" align="left" style="margin-right:16px;"/>
+
+<h1>scenfirepy</h1>
 
 <p>
 <strong>scenfirepy</strong> is a Python library for building fire-size scenarios by selecting subsets
@@ -9,6 +8,9 @@ of simulated fire events whose size distributions reproduce observed historical 
 Historical regimes can be characterized using raster-based fire information such as fire hazard,
 burned area, or fire severity, depending on data availability.
 </p>
+
+<div style="clear: both;"></div>
+
 
 
 # scenfirepy
