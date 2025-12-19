@@ -18,7 +18,7 @@ scenfirepy can be installed using **Anaconda** and used from the Anaconda Prompt
 # (run in Anaconda Prompt)
 conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
 pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
-```bash
+------
 
 Examples of scenfirepy application
 
