@@ -1,3 +1,5 @@
+<img src="scenfirepy_logo.png" alt="scenfirepy logo" width="220"/>
+
 # scenfirepy
 
 **scenfirepy** is a Python library for building fire-size scenarios by selecting subsets
