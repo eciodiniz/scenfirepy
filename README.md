@@ -1,6 +1,10 @@
-<img src="scenfirepy_logo.png" alt="scenfirepy logo" width="220"/>
-
 # scenfirepy
+
+<p align="center">
+  <img src="scenfirepy_logo.png" alt="scenfirepy logo" width="220"/>
+</p>
+
+`scenfirepy` is a Python library for building fire-size scenarios by selecting subsets of simulated fire events whose size distributions reproduce observed historical fire regimes.
 
 **scenfirepy** is a Python library for building fire-size scenarios by selecting subsets
 of simulated fire events whose size distributions reproduce observed historical
