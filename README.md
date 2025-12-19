@@ -19,7 +19,7 @@ Thus, **scenfirepy** allows the user, for instance, to:
 - build target fire-size distributions
 - select simulated events to match historical fire regimes
 - support burn-probability and scenario analysis
-
+---
 
 ## Installation
 
@@ -30,7 +30,7 @@ Run the following commands in an Anaconda Prompt:
 
     conda install -y python=3.10 numpy scipy pandas matplotlib rasterio
     pip install https://github.com/eciodiniz/scenfirepy/archive/refs/heads/main.zip
-
+---
 
 ## Examples of scenfirepy application
 
