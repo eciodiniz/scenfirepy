@@ -5,10 +5,7 @@
 </p>
 
 `scenfirepy` is a Python library for building fire-size scenarios by selecting subsets of simulated fire events whose size distributions reproduce observed historical fire regimes.
-
-**scenfirepy** is a Python library for building fire-size scenarios by selecting subsets
-of simulated fire events whose size distributions reproduce observed historical
-fire regimes. Historical regimes can be characterized using raster-based fire
+Historical regimes can be characterized using raster-based fire
 information such as fire hazard, burned area, or fire severity, depending on
 data availability.
 
