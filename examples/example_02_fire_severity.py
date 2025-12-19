@@ -29,7 +29,7 @@ import rasterio
 # The raster contains spatially explicit burn severity values.
 # Only strictly positive values are meaningful for SCENFIRE.
 
-raster_path = r"D:\AXA-Chile\Simulations\SCENFIRE-main\Severity_CL-VS_ID190189_u460_20180313.tif"
+raster_path = r"C:\Users\e.diniz\Downloads\scenfirepy\Severity_CL-VS_ID190189_u460_20180313.tif"
 
 with rasterio.open(raster_path) as src:
     severity = src.read(1).astype(float)
