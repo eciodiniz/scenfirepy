@@ -17,7 +17,7 @@ empirically derived fire-size distributions, supporting fire-risk analysis,
 scenario generation, and burn-probability studies where simulated events must
 be consistent with observed fire regimes.
 
-Thus, `scenfirepy´ allows the user, for instance, to:
+Thus, `scenfirepy` allows the user, for instance, to:
 - process FLP20 (Fire Landscape Probability outputs) from the FConstMTT / Minimum Travel Time (MTT) fire spread model
 - build target fire-size distributions
 - select simulated events to match historical fire regimes
