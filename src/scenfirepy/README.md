@@ -34,11 +34,9 @@ Run the following commands in an Anaconda Prompt:
 
 ## Examples of scenfirepy application
 
-- Example 1 — Fire hazard–based scenario selection  
-  examples/example_01_fire_hazard.md
+- Example 1 — - [Fire hazard–based scenario selection](examples/example_01_fire_hazard.md)
 
-- Example 2 — Fire severity–based scenario selection  
-  examples/example_02_fire_severity.md
+- Example 2 — [Fire severity–based scenario selection](examples/example_02_fire_severity.md)
 
 
 ## Status
