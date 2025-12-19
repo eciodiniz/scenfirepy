@@ -1,6 +1,6 @@
 # scenfirepy
 
-scenfirepy is a Python library for building fire-size scenarios by selecting subsets
+**scenfirepy** is a Python library for building fire-size scenarios by selecting subsets
 of simulated fire events whose size distributions reproduce observed historical
 fire regimes. Historical regimes can be characterized using raster-based fire
 information such as fire hazard, burned area, or fire severity, depending on
@@ -14,7 +14,7 @@ empirically derived fire-size distributions, supporting fire-risk analysis,
 scenario generation, and burn-probability studies where simulated events must
 be consistent with observed fire regimes.
 
-Thus, scenfirepy allows the user, for instance, to:
+Thus, **scenfirepy** allows the user, for instance, to:
 - process FLP20 (Fire Landscape Probability outputs) from the FConstMTT / Minimum Travel Time (MTT) fire spread model
 - build target fire-size distributions
 - select simulated events to match historical fire regimes
@@ -23,7 +23,7 @@ Thus, scenfirepy allows the user, for instance, to:
 
 ## Installation
 
-scenfirepy can be installed using Anaconda and used from the Anaconda Prompt,
+**scenfirepy** can be installed using Anaconda and used from the Anaconda Prompt,
 VS Code, or JupyterLab.
 
 Run the following commands in an Anaconda Prompt:
