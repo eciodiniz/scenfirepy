@@ -1,94 +1,46 @@
+# src/scenfirepy/distribution.py
 import numpy as np
 
-
-def build_target_hist(
-    sizes,
-    event_surfaces,
-    num_bins=20,
-    logaritmic=True
-):
+def build_target_hist(sizes, event_surfaces=None, num_bins=10, logaritmic=False):
     """
-    Literal port of SCENFIRE R::build_target_hist()
+    Build a target histogram from historical sizes and (optional) event_surfaces.
+    Robustly coerce num_bins to int and handle edge cases.
     """
+    # coerce and sanitise num_bins
+    try:
+        num_bins = int(num_bins)
+    except Exception:
+        num_bins = 10
+    if num_bins < 2:
+        num_bins = 10
 
+    # ensure arrays
     sizes = np.asarray(sizes, dtype=float)
-    event_surfaces = np.asarray(event_surfaces, dtype=float)
-
-    sizes = sizes[sizes > 0]
-    event_surfaces = event_surfaces[event_surfaces > 0]
-
-    if sizes.size == 0 or event_surfaces.size == 0:
-        raise ValueError("sizes and event_surfaces must contain positive values")
-
-    eps = 1e-6
-
-    if logaritmic:
-        sizes_tr = np.log(sizes + eps)
-        events_tr = np.log(event_surfaces + eps)
+    if event_surfaces is None:
+        events_tr = sizes
     else:
-        sizes_tr = sizes
-        events_tr = event_surfaces
+        events_tr = np.asarray(event_surfaces, dtype=float)
 
-    all_vals = np.concatenate([sizes_tr, events_tr])
+    # check there's data
+    if sizes.size == 0 and events_tr.size == 0:
+        raise ValueError("No input values to build target histogram.")
 
-    bins = np.linspace(
-        np.min(all_vals),
-        np.max(all_vals),
-        num_bins + 1
-    )
+    # combine to get bin edges (use all_vals so bins cover both)
+    all_vals = np.concatenate([sizes, events_tr])
+    if all_vals.size == 0:
+        raise ValueError("No valid numeric values to compute bins.")
 
-    target_hist, _ = np.histogram(
-        sizes_tr,
-        bins=bins,
-        density=True
-    )
+    # if all values are identical, create a small range
+    vmin = np.nanmin(all_vals)
+    vmax = np.nanmax(all_vals)
+    if np.isclose(vmin, vmax):
+        # create a tiny range around the value
+        vmin = vmin * 0.999 if vmin != 0 else -0.0005
+        vmax = vmax * 1.001 if vmax != 0 else 0.0005
 
-    return {
-        "target_hist": target_hist,
-        "bins": bins
-    }
+    bins = np.linspace(vmin, vmax, num_bins + 1)
 
+    # target histogram from sizes only (density)
+    target_hist, _ = np.histogram(sizes, bins=bins, density=True)
 
-def calculate_discrepancy(target_hist, simulated_hist):
-    """
-    Literal port of SCENFIRE R::calculate_discrepancy()
-    """
-
-    target_hist = np.asarray(target_hist, dtype=float)
-    simulated_hist = np.asarray(simulated_hist, dtype=float)
-
-    if target_hist.shape != simulated_hist.shape:
-        raise ValueError("target_hist and simulated_hist must have same length")
-
-    mask = target_hist > 0
-
-    if not np.any(mask):
-        raise ValueError("target_hist contains no positive values")
-
-    return np.sum(
-        np.abs(simulated_hist[mask] - target_hist[mask]) / target_hist[mask]
-    )
-
-
-def fit_powerlaw(
-    xmin,
-    alpha,
-    n,
-    seed=None
-):
-    """
-    SCENFIRE fit_powerlaw (from Rd specification).
-
-    Generates n samples from a continuous power-law distribution:
-    P(X >= x) ∝ x^(1 - alpha), for x >= xmin
-    """
-
-    if xmin <= 0 or alpha <= 1 or n <= 0:
-        raise ValueError("xmin > 0, alpha > 1, and n > 0 are required")
-
-    rng = np.random.default_rng(seed)
-
-    u = rng.random(n)
-    samples = xmin * (1.0 - u) ** (-1.0 / (alpha - 1.0))
-
-    return samples
+    return {"target_hist": target_hist, "bins": bins}
