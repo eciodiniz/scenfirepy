@@ -10,15 +10,16 @@ def select_events(
     tolerance,
     iter_limit,
     max_it,
-    seed=None,
+    seed=None
 ):
     """
-    Faithful mirror of R scenfire::select_events
+    Python mirror of R scenfire::select_events
 
-    - selects REAL simulated events (indices)
-    - weighted by event_probabilities
-    - enforces surface_threshold
-    - minimizes histogram discrepancy vs target_hist
+    Returns:
+        dict with keys:
+        - surface_index
+        - discrepancy
+        - total_surface
     """
 
     rng = np.random.default_rng(seed)
@@ -26,75 +27,46 @@ def select_events(
     event_sizes = np.asarray(event_sizes, dtype=float)
     event_probabilities = np.asarray(event_probabilities, dtype=float)
 
-    # safety
-    event_probabilities = np.nan_to_num(event_probabilities, nan=0.0)
-    if event_probabilities.sum() == 0:
-        raise ValueError("All event probabilities are zero")
-
-    # normalize probabilities (R does this implicitly)
-    probs = event_probabilities / event_probabilities.sum()
-
-    best_disc = np.inf
     best_idx = None
-    best_surface = None
+    best_disc = np.inf
+    best_surface = 0.0
 
     n_events = event_sizes.size
 
     for _ in range(max_it):
-
-        selected_idx = []
-        total_surface = 0.0
-
-        # sample events WITHOUT replacement, weighted by probabilities
-        order = rng.choice(
-            np.arange(n_events),
+        # sample candidate indices weighted by ignition probability
+        idx = rng.choice(
+            n_events,
             size=n_events,
             replace=False,
-            p=probs,
+            p=event_probabilities / event_probabilities.sum()
         )
 
-        for i in order:
-            s = event_sizes[i]
+        cum_surface = np.cumsum(event_sizes[idx])
+        valid = cum_surface <= surface_threshold
 
-            if total_surface + s > surface_threshold:
-                break
-
-            selected_idx.append(i)
-            total_surface += s
-
-            # R: stop early if we are close enough
-            if abs(total_surface - reference_surface) / reference_surface <= tolerance:
-                break
-
-        if len(selected_idx) == 0:
+        if not np.any(valid):
             continue
 
-        selected_sizes = event_sizes[selected_idx]
+        sel_idx = idx[valid]
+        sel_sizes = event_sizes[sel_idx]
 
-        # histogram of selected events using SAME bins
-        sel_hist, _ = np.histogram(
-            selected_sizes,
-            bins=bins,
-            density=True
-        )
+        hist, _ = np.histogram(sel_sizes, bins=bins, density=True)
+        disc = np.sum(np.abs(hist - target_hist))
 
-        # discrepancy = L1 distance (same spirit as R)
-        disc = np.sum(np.abs(sel_hist - target_hist))
-
-        if disc < best_disc:
+        if disc < best_disc and disc <= tolerance:
             best_disc = disc
-            best_idx = np.array(selected_idx, dtype=int)
-            best_surface = total_surface
+            best_idx = sel_idx
+            best_surface = sel_sizes.sum()
 
-        # R: stop if good enough
         if best_disc <= tolerance:
             break
 
     if best_idx is None:
-        raise RuntimeError("No valid selection found")
+        raise RuntimeError("No valid event selection found")
 
     return {
         "surface_index": best_idx,
-        "total_surface": best_surface,
         "discrepancy": best_disc,
+        "total_surface": best_surface
     }
