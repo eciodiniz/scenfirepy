@@ -22,3 +22,6 @@ def build_target_hist(sizes, event_surfaces, num_bins=10):
         "target_hist": target_hist,
         "bins": bins
     }
+
+def calculate_discrepancy(hist, target_hist):
+    return float(np.sum(np.abs(hist - target_hist)))
