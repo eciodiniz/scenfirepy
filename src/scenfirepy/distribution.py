@@ -18,10 +18,14 @@ def build_target_hist(sizes, event_surfaces, num_bins=10):
         density=True
     )
 
-    return {
-        "target_hist": target_hist,
-        "bins": bins
-    }
+    return {"target_hist": target_hist, "bins": bins}
+
 
 def calculate_discrepancy(hist, target_hist):
     return float(np.sum(np.abs(hist - target_hist)))
+
+
+def fit_powerlaw(xmin, alpha, n, seed=None):
+    rng = np.random.default_rng(seed)
+    u = rng.random(n)
+    return xmin * (1 - u) ** (-1 / (alpha - 1))
