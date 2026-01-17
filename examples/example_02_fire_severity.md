@@ -82,7 +82,5 @@ df = pd.DataFrame({
 })
 
 print("Discrepancy:", result["discrepancy"])
-
-
-###### END
 print(df.head())
+###### END
