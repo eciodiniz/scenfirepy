@@ -1,12 +1,9 @@
 <img src="scenfirepy_logo.png" alt="scenfirepy logo" width="200" align="left" style="margin-right:16px;"/>
 
 <p>
-<code>scenfirepy</code> is a Python library for building fire-size scenarios by selecting subsets
-of simulated fire events whose size distributions reproduce observed historical fire regimes.
-Historical regimes can be characterized using raster-based fire information such as fire hazard,
-burned area, or fire severity, depending on data availability. 
+<code>scenfirepy</code> is a Python library for constructing scenario-consistent spatial fire maps by selecting subsets of simulated or observed fire events whose size distribution matches an empirical or user-defined target. Rather than forecasting fire occurrence, the library supports scenario construction: it identifies collections of fire events whose aggregated magnitude reproduces a prescribed distribution and converts those selections into spatial weight or burn-probability rasters suitable for comparative risk, hazard, or severity analyses. 
 
-The package mirrors the core logic of the SCENFIRE R package: 
+<code>scenfirepy</code> conceptually follows the core logic of the SCENFIRE R package: 
 https://github.com/rmmarcos/SCENFIRE_package
 </p>
 
