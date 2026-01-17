@@ -35,9 +35,9 @@ with rasterio.open(SRC) as src:
     data = src.read(1).astype(float)
     profile = src.profile.copy() 
 
-# The raster profile (CRS, resolution, extent) defines the spatial framework in which scenfirepy outputs will stay. Preserving it ensures 
-# that the final GeoTIFF aligns exactly with the input severity data and with any other spatial layers used by the analyst 
-# (e.g., assets, vegetation, administrative boundaries).
+# The raster profile (CRS, resolution, extent) defines the spatial framework in which scenfirepy outputs will stay.
+# Preserving it ensures that the final GeoTIFF aligns exactly with the input severity data and with any other spatial
+# layers used by the analyst (e.g., assets, vegetation, administrative boundaries).
 
 
 # ------------------------------------------------------
@@ -46,14 +46,15 @@ with rasterio.open(SRC) as src:
 mask = np.isfinite(data) & (data > 0)
 sizes = data[mask]
 
-# Event surfaces represent the spatial weight of each event. Here, each pixel is assumed to contribute equally, so a uniform surface is used.
+# Event surfaces represent the spatial weight of each event. Here, each pixel is assumed to contribute equally,
+# so a uniform surface is used.
 # A tiny deterministic jitter is added only to avoid numerical degeneracy when all surfaces are identical.
-event_surfaces = np.ones_like(sizes) + 1e-6 * np.arange(sizes.size)
+# event_surfaces = np.ones_like(sizes) + 1e-6 * np.arange(sizes.size)
 
 # In scenfirepy, each candidate fire event is represented by two vectors:
 #   - `sizes`: the event magnitude (here, severity value of each pixel)
-#   - `event_surfaces`: the spatial weight or exposure associated with that event. In this example, these surfaces are
-# *weights* per pixel (same units as sizes), not hectares.
+#   - `event_surfaces`: the spatial weight or exposure associated with that event. In this example, these surfaces 
+# are *weights* per pixel (same units as sizes), not hectares.
 # This abstraction allows the selection algorithm to operate independently of
 # spatial geometry, while still preserving spatial meaning through later mapping.
 
@@ -68,9 +69,10 @@ tinfo = build_target_hist(
 target_hist = tinfo["target_hist"]
 bins = tinfo["bins"]
 
-# The target histogram summarizes the empirical distribution of severity values. The selection algorithm does not try to reproduce individual 
-# pixels, but instead seeks a subset of events whose *distributional shape* (across bins) matches this target. This is what guarantees 
-# statistical consistency between the selected scenario and the observed severity regime.
+# The target histogram summarizes the empirical distribution of severity values. The selection algorithm does not 
+# try to reproduce individual pixels, but instead seeks a subset of events whose *distributional shape* (across bins)  
+# matches this target. This is what guarantees statistical consistency between the selected scenario and the observed 
+# severity regime.
 
 # ------------------------------------------------------
 # 4) DEFINE REFERENCE SURFACE AND SCENARIO THRESHOLD
@@ -78,10 +80,11 @@ bins = tinfo["bins"]
 reference_surface = float(sizes.sum())
 surface_threshold = reference_surface * SURF_FRAC
 
-# The reference_surface here is the total observed magnitude used as a scaling reference. The surface threshold defines how much of that total 
-# the scenario should. In severity examples this is the sum of severity values (not physical hectares). contain. Selection stops once the 
-# accumulated selected severity reaches this threshold, ensuring that scenario size is controlled explicitly and transparently.
-# When defining your reference surface, choose this deliberately — for area-based scenarios use real area units instead
+# The reference_surface here is the total observed magnitude used as a scaling reference. The surface threshold defines 
+# how much of that total the scenario should. In severity examples this is the sum of severity values (not physical hectares) 
+# contain. Selection stops once the accumulated selected severity reaches this threshold, ensuring that scenario size is 
+# controlled explicitly and transparently. When defining your reference surface, choose this deliberately — for area-based
+# scenarios use real area units instead.
 
 # ------------------------------------------------------
 # 5) RUN SCENFIREPY SELECTION ALGORITHM
@@ -99,9 +102,9 @@ res = select_events(
     seed=SEED,
 )
 
-# The algorithm repeatedly samples events without replacement, renormalizing probabilities after each draw, until the surface threshold is 
-# reached. Each trial is evaluated using an L1 discrepancy metric comparing the selected histogram to the target histogram. 
-# The trial with the smallest discrepancy is kept.
+# The algorithm repeatedly samples events without replacement, renormalizing probabilities after each draw, until the surface 
+# threshold is reached. Each trial is evaluated using an L1 discrepancy metric comparing the selected histogram to the target 
+# histogram. The trial with the smallest discrepancy is kept.
 
 # ------------------------------------------------------
 # 6) COMPUTE EVENT-LEVEL PROBABILITY WEIGHTS
@@ -112,13 +115,13 @@ selected_vec[sel_idx] = 1.0
 
 bp_per_event = calc_burn_probability(selected_vec, event_surfaces)
 
-# `selected_vec` is an indicator of which candidate events belong to the scenario. Thus, selected_vec is an index/indicator vector 
-# (1 = chosen event).
-# bp_per_event is scenario-relative mass assigned to selected events (it is not an absolute annual probability unless normalized against a 
-# physical reference surface)
-# `calc_burn_probability` distributes probability mass across selected events. The burn_probability values are normalized according to
-# calc_burn_probability semantics (per-event mass). They sum to the total selected-mass normalization used in the scenario (e.g., severity).
-# The result is a *scenario-relative probability*, not an unconditional forecast.
+# `selected_vec` is an indicator of which candidate events belong to the scenario. Thus, selected_vec is an index/indicator 
+# vector (1 = chosen event).
+# bp_per_event is scenario-relative mass assigned to selected events (it is not an absolute annual probability unless 
+# normalized against a physical reference surface)
+# `calc_burn_probability` distributes probability mass across selected events. The burn_probability values are normalized 
+# according to calc_burn_probability semantics (per-event mass). They sum to the total selected-mass normalization used in 
+# the scenario (e.g., severity). The result is a *scenario-relative probability*, not an unconditional forecast.
 # In this example it answers: “given this scenario, where does severity concentrate spatially?”
 
 # ------------------------------------------------------
@@ -127,8 +130,8 @@ bp_per_event = calc_burn_probability(selected_vec, event_surfaces)
 out = np.zeros_like(data, dtype=float)
 out[mask] = bp_per_event
 
-# Until now, all computations occurred in vector space. This step reconnects the selected scenario to geographic space, producing a
-# raster where each pixel value reflects its contribution to the selected scenario.
+# Until now, all computations occurred in vector space. This step reconnects the selected scenario to geographic space, 
+# producing a raster where each pixel value reflects its contribution to the selected scenario.
 
 # ------------------------------------------------------
 # 8) EXPORT FINAL GEO-TIFF
@@ -139,12 +142,12 @@ Path("Final").mkdir(parents=True, exist_ok=True)
 with rasterio.open(OUT_TIF, "w", **profile) as dst:
     dst.write(out.astype("float32"), 1)
 
-# The exported GeoTIFF is the main user-facing product of this workflow. In this example, it represents a spatially explicit severity 
-# scenario that is statistically consistent with the observed severity regime. Thus, this GeoTIFF is a scenario-consistent spatial 
-# weight map: in this example it highlights where the selected severity mass concentrates under the chosen scenario (useful for 
-# comparative risk mapping, not for direct frequency forecasting).
-#  Analysts can overlay this raster with assets, ecosystems, or administrative units to compare relative impacts, prioritize 
-# interventions, or evaluate alternative scenario assumptions.
+# The exported GeoTIFF is the main user-facing product of this workflow. In this example, it represents a spatially  
+# explicit severity scenario that is statistically consistent with the observed severity regime. Thus, this GeoTIFF is 
+# a scenario-consistent spatial weight map: in this example it highlights where the selected severity mass concentrates 
+# under the chosen scenario (useful for comparative risk mapping, not for direct frequency forecasting).
+#  Analysts can overlay this raster with assets, ecosystems, or administrative units to compare relative impacts,  
+# prioritize interventions, or evaluate alternative scenario assumptions.
 
 print("Done:", OUT_TIF)
 print(
@@ -154,13 +157,17 @@ print(
 )
 
 # In the output performance metrics of the quality of the raster produced: 
-# `Discrepancy` measures how closely the selected severity distribution matches the target severity regime (L1 distance between histograms).
+# `Discrepancy` measures how closely the selected severity distribution matches the target severity regime (L1 distance
+# between histograms).
 # For example, discrepancy < 0.15 → acceptable match and < 0.15 → acceptable match
-# `Selected events (98)` represent the raster cells (severity “events”) retained by the algorithm. More selected events = more flexibility
-# `Selected surfaces` = sum of the pixel magnitudes (the sizes values) for the pixels chosen by select_events. Not hectares unless 
-# sizes are in hectares. For severity example the selected_surface is the sum of those severity scores for the chosen pixels.
+# `Selected events (98)` represent the raster cells (severity “events”) retained by the algorithm. I.e.,
+# More selected events = more flexibility
+# `Selected surfaces` = sum of the pixel magnitudes (the sizes values) for the pixels chosen by select_events. 
+# Not hectares unless sizes are in hectares. For severity example the selected_surface is the sum of those severity scores
+# for the chosen pixels.
 
-# Alternatively, you can also run the algorithm multiple times to improve performance to obtain different results by running multiple seeds and retaining the best result.
+# Alternatively, you can also run the algorithm multiple times to improve performance to obtain different results by running
+# multiple seeds and retaining the best result.
 # For example, below the algorithm is run 10 times to select events and will extract the best result (i.e., smallest discrepancy)
 
 best = None
