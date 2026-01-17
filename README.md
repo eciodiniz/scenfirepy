@@ -9,16 +9,63 @@ https://github.com/rmmarcos/SCENFIRE_package
 
 <div style="clear: both;"></div>
 
-This enables Python-based workflows that link fire simulation outputs to
-empirically derived fire-size distributions, supporting fire-risk analysis,
-scenario generation, and burn-probability studies where simulated events must
-be consistent with observed fire regimes.
+## Conceptual overview
 
-Thus, `scenfirepy` allows the user, for instance, to:
-- process FLP20 (Fire Landscape Probability outputs) from the FConstMTT / Minimum Travel Time (MTT) fire spread model
-- build target fire-size distributions
-- select simulated events to match historical fire regimes
-- support burn-probability and scenario analysis
+Given a sampling of candidate fire events (raster-based events or mapped perimeters), scenfirepy:
+-	builds a target magnitude distribution (e.g. from observations or reference simulations);
+-	repeatedly samples events without replacement, weighted by event probability;
+-	stops sampling when a predefined total magnitude (surface) is reached;
+-	evaluates the sampled subset against the target using an L₁ histogram discrepancy;
+-	retains the subset that best matches the target distribution.
+The selected events are then mapped back to space to generate per-cell scenario weights or burn-probability rasters.
+
+## Typical applications
+-	Build scenario burn-probability or weight maps from hazard or severity rasters.
+-	Select scenario-consistent subsets of simulated perimeters for spatial comparison.
+-	Produce inputs for exposure, impact, or relative risk analyses. 
+-	Aggregate FLP20 (Fire Landscape Probability outputs) from the FConstMTT / Minimum Travel Time (MTT) fire spread model into cellwise severity rasters.
+  
+## Core functionality
+-	Target histogram construction (linear or log-spaced bins).
+-	Event selection via probability-weighted sampling without replacement.
+-	Explicit magnitude control through a surface_threshold (absolute or fractional).
+-	Selection quality assessed by normalized L₁ histogram discrepancy.
+-	Conversion of selected events into per-event mass and spatial rasters.
+-	Optional helpers for reading and aggregating FLP20 outputs.
+
+## Primary functions:
+-	build_target_hist
+-	select_events
+-	calc_burn_probability
+-	FLP20 parsing and aggregation helpers
+
+## Typical workflow 
+-	Derive event magnitudes (sizes) and spatial supports (event_surfaces).
+-	Build the target histogram from reference data.
+-	Run select_events(...) with tuning parameters.
+-	Convert selected events to per-event weights with calc_burn_probability(...).
+-	Rasterize results to GeoTIFF or GPKG.
+
+## Inputs and outputs
+-	Inputs: rasters or vector files defining fire event magnitudes and spatial extent.
+-	Outputs: per-event scenario weights and spatial rasters.
+Note: the selected surface is the sum of retained event magnitudes. It represents physical area only if the input magnitudes are areas; otherwise it represents total retained magnitude in the units of the input data.
+
+## Reproducibility and tuning
+-	Use seed to reproduce a given selection.
+-	Improve fit by increasing max_it / iter_limit, or by running multiple seeds and retaining the best result.
+-	Scenario magnitude can be controlled directly (surface_threshold) or relatively (SURF_FRAC × reference surface).
+-	Avoid excessive bin counts when data are sparse.
+
+## Important cautions
+-	Histogram comparisons require identical bin edges across runs.
+-	Event ordering must be consistent between magnitude vectors and spatial representations. Misalignment will invalidate results and is a usage error, not an algorithmic flaw.
+-	Outputs are scenario-relative weights, not unconditional or annualized probabilities.
+
+## Limitations
+-	The stochastic search may yield different solutions for different seeds; stability improves with iteration count or seed sweeps.
+-	FLP20 functionality is limited to flame-length/severity aggregation and is not required for hazard workflows.
+
 ---
 
 ## Installation
