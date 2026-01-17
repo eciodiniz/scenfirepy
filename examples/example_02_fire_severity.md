@@ -166,9 +166,10 @@ print(
 # Not hectares unless sizes are in hectares. For severity example the selected_surface is the sum of those severity scores
 # for the chosen pixels.
 
-# Alternatively, you can also run the algorithm multiple times to improve performance to obtain different results by running
-# multiple seeds and retaining the best result.
-# For example, below the algorithm is run 10 times to select events and will extract the best result (i.e., smallest discrepancy)
+# Alternatively, you can also run the algorithm multiple times to improve performance to obtain different results by 
+# running multiple seeds and retaining the best result.
+# For example, below the algorithm is run 10 times to select events and will extract the best result
+# (i.e., smallest discrepancy)
 
 best = None
 best_disc = np.inf
