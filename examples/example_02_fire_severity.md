@@ -18,7 +18,7 @@ from scenfirepy.burn_probability import calc_burn_probability
 # ------------------------------------------------------
 # USER INPUTS AND CONTROLS
 # ------------------------------------------------------
-SRC = r"D:\AXA-Chile\Simulations\SCENFIRE-main\Severity_CL-VS_ID190189_u460_20180313.tif" # Input raster of observed fire severity
+SRC = r"D:\SCENFIREPY\Files\Severity_CL-VS_ID190189_u460_20180313.tif" # Input raster of observed fire severity
 OUT_TIF = "severity_bp.tif"    # Output raster: scenario-based severity probability
 SEED = 123                            # Random seed for reproducible selection
 SURF_FRAC = 0.40                      # Fraction of total observed severity to represent
