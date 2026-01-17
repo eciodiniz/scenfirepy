@@ -160,6 +160,40 @@ print(
 # `Selected surfaces` = sum of the pixel magnitudes (the sizes values) for the pixels chosen by select_events. Not hectares unless 
 # sizes are in hectares. For severity example the selected_surface is the sum of those severity scores for the chosen pixels.
 
+# Alternatively, you can also run the algorithm multiple times to improve performance to obtain different results by running multiple seeds and retaining the best result.
+# For example, below the algorithm is run 10 times to select events and will extract the best result (i.e., smallest discrepancy)
+
+best = None
+best_disc = np.inf
+
+for i in range(10):
+    res = select_events(
+        event_sizes=sizes,
+        event_probabilities=sizes,
+        target_hist=target_hist,
+        bins=bins,
+        reference_surface=reference_surface,
+        surface_threshold=surface_threshold,
+        tolerance=0.1,
+        iter_limit=500_000,
+        max_it=200,
+        seed=123 + i,          # <-- only change
+    )
+
+    if res["discrepancy"] < best_disc:
+        best_disc = res["discrepancy"]
+        best = res
+
+# use `best` from here on
+res = best
+
+# After the loop where `best` is selected
+res = best
+
+print("Done: severity_bp.tif")
+print("Selected events:", len(res["surface_index"]))
+print("Selected surface:", res["total_surface"])
+print("Discrepancy:", res["discrepancy"])
 
 
 ###### END
