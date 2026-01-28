@@ -1,5 +1,5 @@
 cff-version: 0.1.2
-message: "If you use this software, please cite it as below."
+message: "If you use this library, please cite it as below."
 authors:
   - family-names: Diniz
     given-names: Écio Souza
@@ -7,4 +7,4 @@ title: "Scenfirepy: Spatially Explicit Modelling of Fire Scenarios"
 version: "0.1.2"
 doi: 10.5281/zenodo.18381598
 date-released: 2026-01-01
-repository-code: https://github.com/<your-username>/scenfirepy
+repository-code: https://github.com/eciodiniz/scenfirepy 
