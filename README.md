@@ -8,6 +8,7 @@
 
 <div style="clear: both;"></div>
 
+
 ## Conceptual overview
 
 Given a sampling of candidate fire events (raster-based events or mapped perimeters), scenfirepy:
