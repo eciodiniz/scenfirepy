@@ -4,7 +4,7 @@
 <p>
 <code>scenfirepy</code> is a Python library for constructing scenario-consistent spatial fire maps by selecting subsets of simulated or observed fire events whose size distribution matches an empirical or user-defined target. 
 
-    Rather than forecasting fire occurrence, the library supports scenario construction: it identifies collections of fire events whose aggregated magnitude reproduces a prescribed distribution and converts those selections into spatial weight or burn-probability rasters suitable for comparative risk, hazard, or severity analyses. 
+Rather than forecasting fire occurrence, the library supports scenario construction: it identifies collections of fire events whose aggregated magnitude reproduces a prescribed distribution and converts those selections into spatial weight or burn-probability rasters suitable for comparative risk, hazard, or severity analyses. 
 
     
 </p>
